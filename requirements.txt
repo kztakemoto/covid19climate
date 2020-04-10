@@ -1,0 +1,12 @@
+R v3.6.2
+===============
+ggplot2 v3.1.1
+mixdist v0.5.5
+distcrete v1.0.3
+incidence v1.7.1
+earlyR v0.0.1
+R0 v1.2.6
+raster v2.9.5
+spdep v1.1.3
+spatialreg v1.1.5
+MuMIn v1.43.6
