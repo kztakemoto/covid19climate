@@ -5,7 +5,7 @@ This repository contains the datasets and R codes for reproducing the results in
 MIT licensed.
 Happy if you cite our study when using the data and codes:
 
-Chiyomaru K & Takemoto K (2020) **Global COVID-19 transmission rate is influenced by precipitation seasonality and the speed of climate temperature warming.**
+Chiyomaru K & Takemoto K (2020) **Global COVID-19 transmission rate is influenced by precipitation seasonality and the speed of climate temperature warming.** *in preparation*.
 
 
 ## Datasets
