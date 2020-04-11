@@ -54,7 +54,7 @@ Rscript compute_epidemic_parameters.R [dataset_type]
 * [R0 (earlyR package)](https://www.repidemicsconsortium.org/earlyR/)
 
 The parameters are computed from the data within a certain period (15 days since 30 cases have first recorded, in default).
-For estimating R0, the serial interval distributions in [Nishiura et al. (2020)](https://www.ijidonline.com/article/S1201-9712(20)30119-3/fulltex), [Wang et al. (2020)](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3551767), and [Du et al. (2020)](https://wwwnc.cdc.gov/eid/article/26/6/20-0357_article) are used, respectively.
+For estimating R0, the serial interval distributions in [Nishiura et al. (2020)](https://www.ijidonline.com/article/S1201-9712(20)30119-3/fulltext), [Wang et al. (2020)](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3551767), and [Du et al. (2020)](https://wwwnc.cdc.gov/eid/article/26/6/20-0357_article) are used, respectively.
 See also the comments in the codes for details.
 
 ### Climate parameters, etc.
@@ -88,7 +88,6 @@ See also the comments in the codes for details.
 * [warming velocity](https://science.sciencemag.org/content/334/6056/660): computed based on [current annual mean temperature (AMT)](https://worldclim.org/data/worldclim21.html) and [past AMT (CCSM)](http://www.worldclim.com/past).
 * [human footprint](https://sedac.ciesin.columbia.edu/data/set/wildareas-v2-human-footprint-geographic)
 * [population density](https://sedac.ciesin.columbia.edu/data/set/gpw-v4-population-density-rev11)
-* [aridity index](https://figshare.com/articles/Global_Aridity_Index_and_Potential_Evapotranspiration_ET0_Climate_Database_v2/7504448/3)
 * [GDP per capita](https://datadryad.org/stash/dataset/doi:10.5061/dryad.dk1j0)
 * [Human development index](https://datadryad.org/stash/dataset/doi:10.5061/dryad.dk1j0)
 
