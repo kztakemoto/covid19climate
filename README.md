@@ -95,6 +95,6 @@ See also the comments in the codes for details.
 
 
 ## Contact
-Kazuhiro Takemoto
+[Kazuhiro Takemoto](https://sites.google.com/site/kztakemoto/)
  * e-mail: takemoto@bio.kyutech.ac.jp
  * twitter: [@kztakemoto](https://twitter.com/kztakemoto)
