@@ -1,17 +1,17 @@
 # covid19climate
-This repository contains the datasets and R codes for reproducing the results in [*Global COVID-19 transmission rate is influenced by precipitation seasonality and the speed of climate temperature warming*](https://www.medrxiv.org).
+This repository contains the datasets and R codes for reproducing the results in [*Global COVID-19 transmission rate is influenced by precipitation seasonality and the speed of climate temperature warming*](https://www.medrxiv.org/content/10.1101/2020.04.10.20060459v1).
 
 ## Terms of use
 MIT licensed.
 Happy if you cite our study when using the data and codes:
 
-Chiyomaru K & Takemoto K (2020) **Global COVID-19 transmission rate is influenced by precipitation seasonality and the speed of climate temperature warming.** *in preparation*.
+Chiyomaru K & Takemoto K (2020) **Global COVID-19 transmission rate is influenced by precipitation seasonality and the speed of climate temperature warming.** medRxiv 2020.04.10.20060459. doi:[10.1101/2020.04.10.20060459](https://www.medrxiv.org/content/10.1101/2020.04.10.20060459v1)
 
 
 ## Datasets
 Our datasets were generated based on [2019 Novel Coronavirus COVID-19 (2019-nCoV) Data Repository by Johns Hopkins CSSE (JHU CSSE COVID-19)](https://github.com/CSSEGISandData/COVID-19).
 
-``data_used_in_manuscirpt`` directory contains the datasets of the epidemic parameters, climate parameters, etc., used in [our study](https://www.medrxiv.org).
+``data_used_in_manuscirpt`` directory contains the datasets of the epidemic parameters, climate parameters, etc., used in [our study](https://www.medrxiv.org/content/10.1101/2020.04.10.20060459v1).
 The datasets were generated using the R codes (see "Codes" section).
 We used the [JHU CSSE COVID-19 data](https://github.com/CSSEGISandData/COVID-19) for the period between January 22, 2020 - April 6, 2020.
 
