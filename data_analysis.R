@@ -45,7 +45,7 @@ d <- d[d$observational.period >= 15, ]
 d$temp.ave.peak <- sqrt((d$temp.ave - 7.8) ** 2)
 
 epi_param <- c("nb.cases.per.day","power.law.exponent","growth.rate.incidence.package","doubling.time","earlyR0.nishiura","earlyR0.wang","earlyR0.du","growth.rate.R0.package","R0.EG.nishiura","R0.EG.wang","R0.EG.du","R0.ML.nishiura","R0.ML.wang","R0.ML.du","total.nb.cases")
-env_param <- c("temp.min", "temp.max", "temp.ave", "temp.ave.peak", "d.temp.range", "temp.seasonality", "precipitation", "precipitation.seasonality", "aridity", "solar.rad", "wind.speed", "water.vapor.pressure" ,"humidity", "elevation", "warming.velocity", "gdp.per.capita", "human.dev.index", "human.footprint", "population.density","ban")
+env_param <- c("temp.min", "temp.max", "temp.ave", "temp.ave.peak", "d.temp.range", "temp.seasonality", "precipitation", "precipitation.seasonality", "aridity", "solar.rad", "wind.speed", "water.vapor.pressure", "humidity", "elevation", "warming.velocity", "gdp.per.capita", "human.dev.index", "human.footprint", "population.density", "ban", "pm25")
 
 # simple pairwise correlation analysis
 for(epi in epi_param){
@@ -62,7 +62,7 @@ d$total.nb.cases <- ifelse(d$total.nb.cases > 0, d$total.nb.cases, NA)
 d$growth.rate.incidence.package <- ifelse(is.finite(d$growth.rate.incidence.package), d$growth.rate.incidence.package, NA)
 
 # exclude NA
-d <- na.omit(d[c("growth.rate.incidence.package", "total.nb.cases", "Long", "Lat", env_param)])
+d <- na.omit(d[c("sample.id","growth.rate.incidence.package", "total.nb.cases", "Long", "Lat", env_param)])
 
 # check quadratic relationship between temperature and transmission rate
 summary(nls(log(total.nb.cases)~b+c_temp*(temp.ave-temp_c)**2 + c_hum*(humidity - hum_c)**2, data=d, start=c(b=1,c_temp=1, c_hum=1, temp_c=1, hum_c=1)))
@@ -75,14 +75,17 @@ d_sub <- data.frame(
     #scale(d[c("power.law.exponent")]),
     scale(sqrt(d[c("precipitation", "precipitation.seasonality")])),
     scale(log(d[c("aridity", "population.density", "gdp.per.capita")])),
+    scale(abs(d[c("pm25")])**(1/3)),
     scale(log(d[c("total.nb.cases")])),
     #scale(log(d[c("nb.cases.per.day")])),
     #scale(log(d[c("doubling.time")])),
     scale(log(abs(d["warming.velocity"])))
 )
 
+cat(dim(d_sub),"\n")
+
 ## OLS regression analysis #######################################
-res1 <- lm(growth.rate.incidence.package~temp.ave.peak+d.temp.range+temp.seasonality+wind.speed+precipitation+precipitation.seasonality+solar.rad+humidity+population.density+human.dev.index+warming.velocity+ban, data=d_sub)
+res1 <- lm(growth.rate.incidence.package~temp.ave.peak+d.temp.range+temp.seasonality+wind.speed+precipitation+precipitation.seasonality+solar.rad+humidity+population.density+human.dev.index+warming.velocity+ban+pm25, data=d_sub)
 
 res1_models <- dredge(res1,rank="AICc")
 res1_best <- get.models(res1_models, subset = 1)[1]
@@ -114,9 +117,9 @@ lm.morantest.exact(res1,longlat_listw)
 lm.morantest.exact(res1_best[[1]],longlat_listw)
 
 # A spatial eigenvector mapping (SEVM) modelling approach removing spatial autocorrelation in the model residuals
-lagcol <- SpatialFiltering(growth.rate.incidence.package~1, ~temp.ave.peak+d.temp.range+temp.seasonality+wind.speed+precipitation+precipitation.seasonality+solar.rad+humidity+population.density+human.dev.index+warming.velocity+ban-1, data=d_sub, style="W", nb=longlat_nb, ExactEV=T)
+lagcol <- SpatialFiltering(growth.rate.incidence.package~1, ~temp.ave.peak+d.temp.range+temp.seasonality+wind.speed+precipitation+precipitation.seasonality+solar.rad+humidity+population.density+human.dev.index+warming.velocity+ban+pm25-1, data=d_sub, style="W", nb=longlat_nb, ExactEV=T)
 
-res1_corr <- lm(growth.rate.incidence.package~temp.ave.peak+d.temp.range+temp.seasonality+wind.speed+precipitation++precipitation.seasonality+solar.rad+humidity+population.density+human.dev.index+warming.velocity+ban+fitted(lagcol), data=d_sub)
+res1_corr <- lm(growth.rate.incidence.package~temp.ave.peak+d.temp.range+temp.seasonality+wind.speed+precipitation++precipitation.seasonality+solar.rad+humidity+population.density+human.dev.index+warming.velocity+ban+pm25+fitted(lagcol), data=d_sub)
 
 res1_corr_models <- dredge(res1_corr,rank="AICc",fixed = "fitted(lagcol)")
 res1_corr_best <- get.models(res1_corr_models, subset = 1)[1]

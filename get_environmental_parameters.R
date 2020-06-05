@@ -102,6 +102,12 @@ raster_filename <- paste(dir_env, "population_density/gpw_v4_population_density_
 # load raster file
 r_population_density <- raster(raster_filename)
 
+# Global Annual PM2.5 Grids from MODIS, MISR and SeaWiFS Aerosol Optical Depth (AOD) with GWR, v1 (1998 – 2016)
+# https://sedac.ciesin.columbia.edu/data/set/sdei-global-annual-gwr-pm2-5-modis-misr-seawifs-aod
+raster_filename <- paste(dir_env, "air_pollution/gwr_pm25_2016.tif", sep="")
+# load raster file
+r_pm25 <- raster(raster_filename)
+
 ## Global Aridity and PET Data ####################################
 # https://figshare.com/articles/Global_Aridity_Index_and_Potential_Evapotranspiration_ET0_Climate_Database_v2/7504448/3
 # generate filename
@@ -297,7 +303,10 @@ for(sample_id in 1:size[[1]]){
     ## Human development index
     human.dev.index <- extract(r_HDI, d[sample_id, c("Long","Lat")], buffer=extract_buffer, fun=mean)
 
-    sum_data <- c(metadata, temp.min, temp.max, temp.ave, d.temp.range, temp.seasonality, precipitation, precipitation.seasonality, aridity, solar.rad, wind.speed, water.vapor.pressure, humidity, elevation, warming.velocity, human.footprint, gdp.per.capita, human.dev.index, population.density)
+    ## air pollution (PM2.5)
+    pm25 <- extract(r_pm25, d[sample_id, c("Long","Lat")], buffer=extract_buffer, fun=mean)
+
+    sum_data <- c(metadata, temp.min, temp.max, temp.ave, d.temp.range, temp.seasonality, precipitation, precipitation.seasonality, aridity, solar.rad, wind.speed, water.vapor.pressure, humidity, elevation, warming.velocity, human.footprint, gdp.per.capita, human.dev.index, population.density, pm25)
     # print
     cat(sum_data,"\n")
     # summarize the data
@@ -306,7 +315,7 @@ for(sample_id in 1:size[[1]]){
 
 # generate header
 header_names <- c("sample.id", names(d)[1:(first_idx_count - 1)])
-param_names <- c("temp.min", "temp.max", "temp.ave", "d.temp.range", "temp.seasonality", "precipitation", "precipitation.seasonality", "aridity", "solar.rad", "wind.speed", "water.vapor.pressure", "humidity", "elevation", "warming.velocity", "human.footprint", "gdp.per.capita", "human.dev.index", "population.density")
+param_names <- c("temp.min", "temp.max", "temp.ave", "d.temp.range", "temp.seasonality", "precipitation", "precipitation.seasonality", "aridity", "solar.rad", "wind.speed", "water.vapor.pressure", "humidity", "elevation", "warming.velocity", "human.footprint", "gdp.per.capita", "human.dev.index", "population.density", "pm25")
 header_names <- c(header_names, param_names)
 
 # add header
